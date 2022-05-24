@@ -5,8 +5,6 @@ import { presets } from './text.preset'
 export default function text({ children, preset = "default", style }) {
     const textStyles = StyleSheet.compose(presets[preset], style)
     return (
-        <RNText style={textStyles}>
-            {children}
-        </RNText>
+        <RNText style={textStyles}>{children}</RNText>
     )
 }
