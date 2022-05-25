@@ -8,6 +8,7 @@ import Home from './src/screens/Home';
 import { Antonio_500Medium } from '@expo-google-fonts/antonio';
 import { Spartan_700Bold, Spartan_400Regular } from '@expo-google-fonts/spartan';
 import { colors } from './src/theme/colors';
+import Details from './src/screens/Details';
 
 
 const Stack = createNativeStackNavigator();
@@ -24,6 +25,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Details" component={Details} />
         </Stack.Navigator>
       </NavigationContainer>
       <StatusBar style="light" />
