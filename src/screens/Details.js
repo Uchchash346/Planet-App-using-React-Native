@@ -1,15 +1,22 @@
-import { View, SafeAreaView, StyleSheet } from 'react-native'
+import { View, SafeAreaView, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
 import Text from '../components/text/text';
 import PlanetHeader from '../components/planet-header';
 import { colors } from '../theme/colors';
+import { spacing } from '../theme/spacing';
 
 
-export default function Details() {
+export default function Details({ navigation, route }) {
+    const planet = route.params.planet;
+    console.log("planet -->", planet)
     return (
         <SafeAreaView style={styles.container}>
             <PlanetHeader backBtn={true} />
-            <Text>Details</Text>
+            <ScrollView>
+                <View style={styles.imageView}>
+
+                </View>
+            </ScrollView>
         </SafeAreaView>
     )
 }
@@ -19,4 +26,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.black,
     },
+    imageView: {
+        padding: spacing[5],
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
 })
