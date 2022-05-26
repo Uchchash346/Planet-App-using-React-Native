@@ -1,4 +1,4 @@
-import { View, SafeAreaView, StyleSheet, ScrollView, Pressable } from 'react-native'
+import { View, SafeAreaView, StyleSheet, ScrollView, Pressable, Linking } from 'react-native'
 import React from 'react'
 import Text from '../components/text/text';
 import PlanetHeader from '../components/planet-header';
@@ -6,13 +6,20 @@ import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 import { EarthSvg, JupiterSvg, MarsSvg, MercurySvg, NeptuneSvg, SaturnSvg, UranusSvg, VenusSvg } from '../svg';
 
+const PlanetSection = ({ title, value }) => {
+    return (
+        <View style={styles.planetsSection}>
+            <Text preset="small" style={{ textTransform: "uppercase" }}>{title}</Text>
+            <Text preset="h2">{value}</Text>
+        </View>
+    )
+}
 
-export default function Details({ navigation, route }) {
+export default function Details({ route }) {
     const planet = route.params.planet;
-    const { name, description } = planet;
-    console.log("planet -->", planet);
+    const { name, description, rotationTime, revolutionTime, radius, avgTemp, wikiLink } = planet;
 
-    const renderImage = (name) => {
+    const renderImage = () => {
         switch (name) {
             case 'mercury':
                 return <MercurySvg />
@@ -32,6 +39,11 @@ export default function Details({ navigation, route }) {
                 return <VenusSvg />
         }
     }
+
+    const onPressLink = () => {
+        Linking.openURL(wikiLink)
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <PlanetHeader backBtn={true} />
@@ -42,11 +54,16 @@ export default function Details({ navigation, route }) {
                 <View style={styles.detailsView}>
                     <Text preset="h1" style={styles.name}>{name}</Text>
                     <Text style={styles.description}>{description}</Text>
-                    <Pressable style={styles.source}>
+                    <Pressable onPress={onPressLink} style={styles.source}>
                         <Text>Source: </Text>
                         <Text preset="h4" style={styles.wikipedia}>Wikipedia</Text>
                     </Pressable>
                 </View>
+                <View style={{ height: 40 }} />
+                <PlanetSection title="ROTATION TIME" value={rotationTime} />
+                <PlanetSection title="REVOLUTION TIME" value={revolutionTime} />
+                <PlanetSection title="RADIUS" value={radius} />
+                <PlanetSection title="AVERAGE TEMP." value={avgTemp} />
             </ScrollView>
         </SafeAreaView>
     )
@@ -85,5 +102,16 @@ const styles = StyleSheet.create({
     wikipedia: {
         textDecorationLine: "underline",
         fontWeight: "bold",
+    },
+    planetsSection: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: spacing[5],
+        paddingVertical: spacing[4],
+        borderWidth: 1,
+        borderColor: colors.grey,
+        marginHorizontal: spacing[6],
+        marginBottom: spacing[4],
     }
 })
